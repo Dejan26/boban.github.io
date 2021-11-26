@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Example - Stopwatch animation</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+       window.onload = draw;
+        function draw() {
+            let canvas = document.getElementById("my-canvas");
+            if (canvas.getContext) {
+                let ctx = canvas.getContext('2d');
+                update(ctx)
+                
+               
+                
+                
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+        
+        let angle = 0;
+        
+        function update(ctx) {
+            var date = new Date();
+            var seconds = date.getSeconds();
+            var minutes = date.getMinutes();
+            var hours = date.getHours();
+            ctx.save();
+            ctx.clearRect(0, 0, 400, 300);
+            ctx.beginPath();
+            ctx.arc(200, 150, 120, 0, 2 * Math.PI);
+            ctx.lineWidth = 3;
+            ctx.closePath();
+            ctx.stroke();
+            ctx.translate(200, 150);
+            ctx.rotate((Math.PI / 180) * seconds * 6);
+            ctx.lineWidth = 1;
+            
+            ctx.translate(-200, -150);
+            ctx.beginPath();
+            ctx.strokeStyle='red';
+            
+            ctx.moveTo(200, 150);
+            ctx.lineTo(200, 30);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+            
+            ctx.save();
+            ctx.translate(200, 150);
+            ctx.rotate((Math.PI / 180) * minutes * 6);
+            ctx.translate(-200, -150);
+            ctx.beginPath();          
+            ctx.moveTo(200, 150);
+            ctx.lineTo(200,40);
+            ctx.lineWidth = 4;
+            ctx.closePath();
+            ctx.stroke();
+
+          
+            ctx.restore();
+
+            ctx.save();
+            ctx.translate(200, 150);
+            ctx.rotate((Math.PI / 180) * hours * 30);
+            ctx.translate(-200, -150);
+            ctx.beginPath();
+            ctx.moveTo(200, 150);
+            ctx.lineTo(200, 60);
+            ctx.lineWidth = 5;
+           
+            ctx.closePath();
+            ctx.stroke();
+
+          
+            ctx.restore();
+
+            ctx.beginPath();
+            ctx.arc(200, 150, 6, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.fill();
+
+            var nun;
+            for(num = 1; num < 13; num++){
+            var ang = num * Math.PI / 6;
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center"; 
+            ctx.rotate(ang);
+            ctx.translate(0, -130);
+            ctx.rotate(-ang);
+            ctx.fillText(num.toString(), 200, 150);
+            ctx.rotate(ang);
+            ctx.translate(0, 130);
+            ctx.rotate(-ang);
+  }
+            
+            requestId = requestAnimationFrame(function () {
+                update(ctx);
+            });
+        }
+         
+       
+
+
+
+
+    </script>
+</body>
+</html>
